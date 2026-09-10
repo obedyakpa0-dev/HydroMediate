@@ -1,0 +1,22 @@
+{
+  "name": "hydromediate",
+  "version": "1.0.0",
+  "description": "HydroMediate AI Water Resource Allocation Engine",
+  "main": "backend/main.py",
+  "scripts": {
+    "build": "pip install -r requirements.txt",
+    "start": "sh -c \"cd backend && python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/obedyakpa0-dev/HydroMediate.git"
+  },
+  "keywords": [
+    "water-mediation",
+    "ai",
+    "fastapi",
+    "python"
+  ],
+  "author": "obedyakpa0-dev",
+  "license": "MIT"
+}
