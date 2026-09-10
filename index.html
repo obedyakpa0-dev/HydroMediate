@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HydroMediate - Community Water AI Mediator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Plus Jakarta Sans, Newsreader (Italic accent), JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- TOP BRANDING NAVBAR -->
+        <header class="app-nav">
+            <div class="brand-logo">
+                <span class="logo-mark"><i class="fa-solid fa-droplet"></i></span>
+                <span class="brand-name">hydroMediate <sup>AI</sup></span>
+            </div>
+
+            <div class="nav-system-status">
+                <span class="status-dot green"></span>
+                <span class="system-label" id="aiLabel">LIVE MEDIATION SYSTEM</span>
+                <!-- Hidden elements for app.js bindings -->
+                <div id="aiStatusBadge" class="hidden-binding"></div>
+            </div>
+        </header>
+
+        <!-- HERO EDITORIAL TITLE & TAGLINE SECTION -->
+        <section class="hero-section">
+            <div class="hero-meta">
+                <span class="meta-tag">COMMUNITY AQUIFER MEDIATOR</span>
+                <span class="meta-divider">•</span>
+                <span class="meta-tag" id="capacityLabel">CAPACITY: 50,000 L/DAY</span>
+                <span class="meta-divider">•</span>
+                <span class="meta-tag turn-tag" id="turnCounter">TURN: 1</span>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-headline">
+                    Aquifers are finite. <br>
+                    <span class="serif-accent">Fair allocation</span> should be absolute.
+                </h1>
+                <p class="hero-subtext">
+                    An AI-powered multi-stakeholder dispute engine that audits water claims in real-time, probes fabricated agricultural reporting, and enforces binding community accords.
+                </p>
+            </div>
+            <!-- Binding for shock status badge styling in JS -->
+            <div id="shockStatusBadge" class="shock-status-anchor"></div>
+        </section>
+
+        <!-- DASHBOARD CONTROLS & YIELD ALLOCATION METER -->
+        <section class="dashboard-section">
+            <!-- EDITORIAL ACTION TOOLBAR -->
+            <div class="toolbar-box">
+                <div class="toolbar-header">
+                    <span class="section-label">01 / CONTROLS & SIMULATION</span>
+                </div>
+                <div class="action-buttons">
+                    <button id="btnStart" class="btn btn-primary">
+                        <i class="fa-solid fa-rotate-right"></i> Reset Session
+                    </button>
+                    <button id="btnNextTurn" class="btn btn-secondary">
+                        <i class="fa-solid fa-forward-step"></i> Next Turn
+                    </button>
+                    <button id="btnProbeReport" class="btn btn-warning">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i> Probe Fabricated Report
+                    </button>
+                    <button id="btnTriggerShock" class="btn btn-danger">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Trigger -40% Yield Shock
+                    </button>
+                    <button id="btnViewAccord" class="btn btn-accent">
+                        <i class="fa-solid fa-file-contract"></i> View Binding Accord
+                    </button>
+                </div>
+            </div>
+
+            <!-- WATER YIELD METER CARD -->
+            <div class="meter-card">
+                <div class="meter-header">
+                    <span class="section-label"><i class="fa-solid fa-faucet-drip"></i> BOREHOLE ALLOCATION METER</span>
+                    <span id="supplyRatioText" class="supply-ratio-pill">34,000 / 50,000 L allocated</span>
+                </div>
+                
+                <div class="progress-track-wrapper">
+                    <div class="progress-track">
+                        <div id="progressHouseholds" class="progress-fill fill-hh" style="width: 22%;" title="Households"></div>
+                        <div id="progressSchool" class="progress-fill fill-sch" style="width: 12%;" title="St. Jude School"></div>
+                        <div id="progressSubsistence" class="progress-fill fill-sub" style="width: 20%;" title="Subsistence Farmers"></div>
+                        <div id="progressCashcrop" class="progress-fill fill-cash" style="width: 32%;" title="Cash-Crop Farmers"></div>
+                        <div id="progressGovt" class="progress-fill fill-gov" style="width: 14%;" title="Govt Dev Reserve"></div>
+                    </div>
+                </div>
+
+                <div class="meter-legend">
+                    <div class="legend-item leg-hh"><span class="legend-dot"></span> Households (22%)</div>
+                    <div class="legend-item leg-sch"><span class="legend-dot"></span> St. Jude School (12%)</div>
+                    <div class="legend-item leg-sub"><span class="legend-dot"></span> Subsistence (20%)</div>
+                    <div class="legend-item leg-cash"><span class="legend-dot"></span> Cash-Crop (32%)</div>
+                    <div class="legend-item leg-gov"><span class="legend-dot"></span> Govt Reserve (14%)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN WORKSPACE: DIALOGUE CONSOLE & AUDIT LEDGER -->
+        <main class="main-workspace">
+            <!-- LEFT PANEL: DIALOGUE CONSOLE -->
+            <section class="workspace-panel chat-panel">
+                <div class="panel-top">
+                    <span class="panel-num">02</span>
+                    <h2 class="panel-title">Mediator Dialogue Console</h2>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Dynamic chat messages rendered here -->
+                </div>
+
+                <div class="chat-input-bar">
+                    <input type="text" id="userInput" placeholder="Ask a question or propose a water allocation change..." autocomplete="off" />
+                    <button id="btnSend" class="btn btn-send">
+                        Send <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: CONTRADICTION LEDGER & ACCORD TERMS -->
+            <section class="workspace-panel ledger-panel">
+                <div class="panel-tab-bar">
+                    <button class="tab-item active" id="tabLedgerBtn">
+                        <span class="tab-num">03</span> Claim Contradiction Ledger
+                    </button>
+                    <button class="tab-item" id="tabAccordBtn">
+                        <span class="tab-num">04</span> Binding Accord Terms
+                    </button>
+                </div>
+
+                <!-- TAB 1: LEDGER -->
+                <div class="tab-content" id="tabLedgerContent">
+                    <div class="audit-banner">
+                        <div class="audit-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div class="audit-text">
+                            <strong>Real-Time Assertion Audit</strong>
+                            <p>Every dialogue turn is automatically cross-referenced against mathematical pump limits, telemetry counters, and priority quotas.</p>
+                        </div>
+                    </div>
+
+                    <div class="claims-list" id="claimsList">
+                        <!-- Dynamic claims rendered here -->
+                    </div>
+                </div>
+
+                <!-- TAB 2: ACCORD -->
+                <div class="tab-content hidden" id="tabAccordContent">
+                    <div id="accordViewer" class="accord-card">
+                        <!-- Dynamic accord details rendered here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+
