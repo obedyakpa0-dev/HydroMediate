@@ -4,15 +4,14 @@
 
 function getApiBase() {
     if (window.HYDRO_API_URL) return window.HYDRO_API_URL;
-    
+
     const loc = window.location;
-    if (loc && loc.protocol && loc.protocol.startsWith("http")) {
-        if (loc.hostname.includes("github.io")) {
-            return "https://hydromediate-backend.onrender.com";
-        }
-        return loc.origin;
+    // Local dev only
+    if (loc && (loc.hostname === "localhost" || loc.hostname === "127.0.0.1")) {
+        return "http://127.0.0.1:55210";
     }
-    return "http://127.0.0.1:55210";
+    // All deployed environments (GitHub Pages, etc.) -> Render backend
+    return "https://hydromediate.onrender.com";
 }
 
 const API_BASE = getApiBase();
