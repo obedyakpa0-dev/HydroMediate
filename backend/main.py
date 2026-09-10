@@ -18,11 +18,10 @@ app = FastAPI(
 )
 
 # CORS setup
-allowed_origins = os.getenv("FRONTEND_ORIGIN", "http://127.0.0.1:3000,http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all for local dev ease
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -57,20 +56,7 @@ def health_check():
         "docs": "/docs"
     }
 
-# Mount static frontend files
-from fastapi.staticfiles import StaticFiles
-frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
-if os.path.exists(frontend_dir):
-    app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
-else:
-    @app.get("/")
-    def read_root():
-        return {
-            "status": "online",
-            "app": "HydroMediate AI Mediator",
-            "gemini_active": HAS_GEMINI,
-            "docs": "/docs"
-        }
+
 
 @app.post("/api/negotiation/start")
 def start_negotiation(req: StartRequest):
@@ -142,6 +128,21 @@ def get_accord(session_id: str = "default_session"):
     return {
         "accord": accord
     }
+
+# Mount static frontend files
+from fastapi.staticfiles import StaticFiles
+frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
+if os.path.exists(frontend_dir):
+    app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
+else:
+    @app.get("/")
+    def read_root():
+        return {
+            "status": "online",
+            "app": "HydroMediate AI Mediator",
+            "gemini_active": HAS_GEMINI,
+            "docs": "/docs"
+        }
 
 if __name__ == "__main__":
     import uvicorn
