@@ -48,14 +48,29 @@ class ShockRequest(BaseModel):
 class ProbeRequest(BaseModel):
     session_id: Optional[str] = "default_session"
 
-@app.get("/")
-def read_root():
+@app.get("/api/health")
+def health_check():
     return {
         "status": "online",
         "app": "HydroMediate AI Mediator",
-        "groq_active": HAS_GEMINI,
+        "gemini_active": HAS_GEMINI,
         "docs": "/docs"
     }
+
+# Mount static frontend files
+from fastapi.staticfiles import StaticFiles
+frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
+if os.path.exists(frontend_dir):
+    app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
+else:
+    @app.get("/")
+    def read_root():
+        return {
+            "status": "online",
+            "app": "HydroMediate AI Mediator",
+            "gemini_active": HAS_GEMINI,
+            "docs": "/docs"
+        }
 
 @app.post("/api/negotiation/start")
 def start_negotiation(req: StartRequest):

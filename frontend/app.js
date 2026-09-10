@@ -2,7 +2,20 @@
  * HydroMediate Frontend Application Logic
  */
 
-const API_BASE = window.HYDRO_API_URL || "http://127.0.0.1:55210";
+function getApiBase() {
+    if (window.HYDRO_API_URL) return window.HYDRO_API_URL;
+    
+    const loc = window.location;
+    if (loc && loc.protocol && loc.protocol.startsWith("http")) {
+        if (loc.hostname.includes("github.io")) {
+            return "https://hydromediate-backend.onrender.com";
+        }
+        return loc.origin;
+    }
+    return "http://127.0.0.1:55210";
+}
+
+const API_BASE = getApiBase();
 let sessionId = "default_session";
 let currentState = null;
 
@@ -65,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function checkApiHealth() {
     try {
-        const res = await fetch(`${API_BASE}/`);
+        const res = await fetch(`${API_BASE}/api/health`);
         const data = await res.json();
         if (data.gemini_active) {
             aiLabel.textContent = "Gemini 3.6 Flash Active";
